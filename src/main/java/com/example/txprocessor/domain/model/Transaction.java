@@ -6,7 +6,7 @@ import com.example.txprocessor.domain.exception.TransactionCreationException;
 import java.math.BigDecimal;
 import java.util.Objects;
 
-public record Transaction(Long id, BigDecimal amount, TransactionType type, Long parentId) {
+public record Transaction(Long id, BigDecimal amount, TransactionType type, Transaction parent) {
 
     public Transaction {
         if (id == null) {
@@ -18,8 +18,18 @@ public record Transaction(Long id, BigDecimal amount, TransactionType type, Long
         if (type == null) {
             throw new TransactionCreationException("type");
         }
-        if (Objects.equals(id, parentId)) {
-            throw new CircularTransactionCreationException(id);
+        if (parent != null) {
+            validateNoGraphCycles(parent);
+        }
+    }
+
+    private void validateNoGraphCycles(Transaction parent) {
+        Transaction current = parent;
+        while (current != null) {
+            if (Objects.equals(this.id, current.id)) {
+                throw new CircularTransactionCreationException(this.id);
+            }
+            current = current.parent();
         }
     }
 }
