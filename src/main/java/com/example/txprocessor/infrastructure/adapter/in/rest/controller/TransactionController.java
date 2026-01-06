@@ -4,35 +4,31 @@ import com.example.txprocessor.application.port.in.CalculateSumUseCase;
 import com.example.txprocessor.application.port.in.ProcessTransactionUseCase;
 import com.example.txprocessor.application.port.in.SearchTxIdByTypeUseCase;
 import com.example.txprocessor.domain.model.TransactionType;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.example.txprocessor.infrastructure.adapter.in.rest.controller.documentation.TransactionApi;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.math.BigDecimal;
 
 @Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/transactions")
-public class TransactionController {
+public class TransactionController implements TransactionApi {
 
     private final ProcessTransactionUseCase processTransactionUseCase;
     private final CalculateSumUseCase calculateSumUseCase;
     private final SearchTxIdByTypeUseCase searchTxIdByTypeUseCase;
 
-    @PutMapping(value = "/{transaction_id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Mono<ProcessTransactionOutput> process(
+    public Mono<TransactionApi.ProcessTransactionOutput> processTransaction(
             @PathVariable("transaction_id") Long transactionId,
             @Validated @RequestBody ProcessTransactionInput input
     ) {
@@ -80,7 +76,7 @@ public class TransactionController {
     }
 
     @GetMapping("/sum/{transaction_id}")
-    public Mono<SumOutput> calculateSum(@Validated @PathVariable("transaction_id") Long transactionId) {
+    public Mono<TransactionApi.SumOutput> calculateSum(@Validated @PathVariable("transaction_id") Long transactionId) {
         log.info("GET /transactions/sum/{}", transactionId);
         return calculateSumUseCase.invoke(transactionId)
                 .map(SumOutput::new)
@@ -89,19 +85,4 @@ public class TransactionController {
                         log.error("Error calculating sum for {}: {}", transactionId, error.getMessage())
                 );
     }
-
-    // Requests
-    public record ProcessTransactionInput(
-            BigDecimal amount,
-            TransactionType type,
-            @JsonProperty("parent_id")  Long parentId
-    ) { }
-
-    // Responses
-    public record ProcessTransactionOutput(String status) {
-        public static ProcessTransactionOutput ok() {
-            return new ProcessTransactionOutput("ok");
-        }
-    }
-    public record SumOutput(BigDecimal sum) { }
 }

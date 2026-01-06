@@ -14,6 +14,7 @@ import java.util.concurrent.TimeoutException;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 @RestControllerAdvice
 public class GlobalErrorHandler extends ResponseEntityExceptionHandler {
@@ -54,7 +55,21 @@ public class GlobalErrorHandler extends ResponseEntityExceptionHandler {
         );
     }
 
-    public record ApiError (String code, String message, Long rootTxId, Long parentTxId) {
+    @Schema(description = "Standard API error response")
+    public record ApiError(
+
+            @Schema(description = "Error code", example = "DATA:CIRCULAR_TRANSACTION")
+            String code,
+
+            @Schema(description = "Human-readable error message")
+            String message,
+
+            @Schema(description = "Root transaction ID involved in the error", nullable = true)
+            Long rootTxId,
+
+            @Schema(description = "Parent transaction ID involved in the error", nullable = true)
+            Long parentTxId
+    ) {
         public ApiError(String code, String message) {
             this(code, message, null, null);
         }
