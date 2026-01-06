@@ -10,13 +10,13 @@ public record Transaction(Long id, BigDecimal amount, TransactionType type, Tran
 
     public Transaction {
         if (id == null) {
-            throw new TransactionCreationException("id");
+            throw new TransactionCreationException(null, "id");
         }
         if (amount == null) {
-            throw new TransactionCreationException("amount");
+            throw new TransactionCreationException(id, "amount");
         }
         if (type == null) {
-            throw new TransactionCreationException("type");
+            throw new TransactionCreationException(id, "type");
         }
         if (parent != null) {
             validateNoGraphCycles(parent);
