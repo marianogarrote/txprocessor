@@ -12,11 +12,11 @@ It is intentionally scoped to the command side: no projections or read models ar
 **2\. Hexagonal Architecture**  
 API (WebFlux Controller)  
 ↓  
-Application / Use Case (ProcessTransactionCommand)  
+Application / Use Case 
 ↓  
 Domain (Transaction Aggregate)  
 ↓  
-Ports (TransactionRepositoryPort)  
+Ports (TransactionPort)  
 ↓  
 Adapters (R2DBC / InMemory)
 

@@ -8,7 +8,7 @@ import com.example.txprocessor.application.usecase.CalculateSumUseOperation;
 import com.example.txprocessor.application.usecase.ProcessTransactionOperation;
 import com.example.txprocessor.application.usecase.SearchTxIdByTypeOperation;
 import com.example.txprocessor.domain.service.TransactionService;
-import com.example.txprocessor.infrastructure.adapter.out.persistence.memory.InMemoryTransactionPort;
+import com.example.txprocessor.infrastructure.adapter.out.persistence.memory.InMemoryTransactionAdapter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -17,7 +17,7 @@ public class TxProcessorAppConfig {
 
     @Bean
     public TransactionPort transactionPort() {
-        return new InMemoryTransactionPort();
+        return new InMemoryTransactionAdapter();
     }
 
     @Bean

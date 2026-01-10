@@ -18,7 +18,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 @ConditionalOnProperty(name = "transaction.storage.type", havingValue = "in-memory", matchIfMissing = true)
 @Slf4j
 @Profile(value = {"local, test"})
-public class InMemoryTransactionPort implements TransactionPort {
+public class InMemoryTransactionAdapter implements TransactionPort {
     private final Map<Long, Transaction> byTxId = new ConcurrentHashMap<>();
     private final Map<TransactionType, List<Long>> typeIndex = new ConcurrentHashMap<>();
     private final Map<Long, List<Long>> parentChildIndex = new ConcurrentHashMap<>();

@@ -17,11 +17,11 @@ import java.math.BigDecimal;
 @DisplayName("InMemoryTransactionPort Unit Tests")
 class InMemoryTransactionPortTest {
 
-    private InMemoryTransactionPort transactionPort;
+    private InMemoryTransactionAdapter transactionPort;
 
     @BeforeEach
     void setUp() {
-        transactionPort = new InMemoryTransactionPort();
+        transactionPort = new InMemoryTransactionAdapter();
     }
 
     @Test
