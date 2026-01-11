@@ -2,7 +2,7 @@ package com.example.txprocessor.infrastructure.adapter.out.persistence.cqrs;
 
 import com.example.txprocessor.domain.model.Transaction;
 import com.example.txprocessor.domain.model.TransactionType;
-import com.example.txprocessor.infrastructure.adapter.out.persistence.TransactionRepository;
+import com.example.txprocessor.infrastructure.adapter.out.persistence.repository.TransactionReader;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -21,7 +21,7 @@ class TransactionQueryTest {
     private static final Transaction TX = TransactionFactory.sample();
 
     @Mock
-    private TransactionRepository repository;
+    private TransactionReader repository;
 
     private TransactionQuery query;
 

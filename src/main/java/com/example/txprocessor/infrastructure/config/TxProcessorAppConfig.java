@@ -8,11 +8,12 @@ import com.example.txprocessor.application.usecase.CalculateSumUseOperation;
 import com.example.txprocessor.application.usecase.ProcessTransactionOperation;
 import com.example.txprocessor.application.usecase.SearchTxIdByTypeOperation;
 import com.example.txprocessor.domain.service.TransactionService;
-import com.example.txprocessor.infrastructure.adapter.out.persistence.TransactionRepository;
+import com.example.txprocessor.infrastructure.adapter.out.persistence.repository.TransactionReader;
 import com.example.txprocessor.infrastructure.adapter.out.persistence.cqrs.TransactionCommand;
 import com.example.txprocessor.infrastructure.adapter.out.persistence.cqrs.TransactionCqrsAdapter;
 import com.example.txprocessor.infrastructure.adapter.out.persistence.cqrs.TransactionQuery;
 import com.example.txprocessor.infrastructure.adapter.out.persistence.memory.InMemoryTransactionAdapter;
+import com.example.txprocessor.infrastructure.adapter.out.persistence.repository.TransactionWriter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -20,12 +21,12 @@ import org.springframework.context.annotation.Configuration;
 public class TxProcessorAppConfig {
 
     @Bean
-    public TransactionCommand transactionCommand(TransactionRepository transactionRepository) {
+    public TransactionCommand transactionCommand(TransactionWriter transactionRepository) {
         return new TransactionCommand(transactionRepository);
     }
 
     @Bean
-    public TransactionQuery transactionQuery(TransactionRepository transactionRepository) {
+    public TransactionQuery transactionQuery(TransactionReader transactionRepository) {
         return new TransactionQuery(transactionRepository);
     }
 
