@@ -1,11 +1,10 @@
 package com.example.txprocessor.infrastructure.adapter.out.persistence.memory;
 
-import com.example.txprocessor.application.port.out.TransactionPort;
 import com.example.txprocessor.domain.model.Transaction;
 import com.example.txprocessor.domain.model.TransactionType;
+import com.example.txprocessor.infrastructure.adapter.out.persistence.TransactionRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -17,8 +16,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 @Repository
 @ConditionalOnProperty(name = "transaction.storage.type", havingValue = "in-memory", matchIfMissing = true)
 @Slf4j
-@Profile(value = {"local, test"})
-public class InMemoryTransactionAdapter implements TransactionPort {
+public class InMemoryTransactionAdapter implements TransactionRepository {
     private final Map<Long, Transaction> byTxId = new ConcurrentHashMap<>();
     private final Map<TransactionType, List<Long>> typeIndex = new ConcurrentHashMap<>();
     private final Map<Long, List<Long>> parentChildIndex = new ConcurrentHashMap<>();
