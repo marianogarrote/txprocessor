@@ -5,10 +5,8 @@ import com.example.txprocessor.infrastructure.adapter.out.persistence.r2dbc.mode
 import com.example.txprocessor.infrastructure.adapter.out.persistence.r2dbc.repository.TransactionWriteRepository;
 import com.example.txprocessor.infrastructure.adapter.out.persistence.repository.TransactionWriter;
 import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Mono;
 
-@Repository
 @AllArgsConstructor
 public class R2dbcTransactionWriteAdapter implements TransactionWriter {
     private final TransactionWriteRepository repository;

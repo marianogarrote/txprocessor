@@ -8,7 +8,9 @@ import com.example.txprocessor.application.usecase.CalculateSumUseOperation;
 import com.example.txprocessor.application.usecase.ProcessTransactionOperation;
 import com.example.txprocessor.application.usecase.SearchTxIdByTypeOperation;
 import com.example.txprocessor.domain.service.TransactionService;
+import com.example.txprocessor.infrastructure.adapter.out.persistence.r2dbc.R2dbcTransactionWriteAdapter;
 import com.example.txprocessor.infrastructure.adapter.out.persistence.r2dbc.model.TransactionEntityMapper;
+import com.example.txprocessor.infrastructure.adapter.out.persistence.r2dbc.repository.TransactionWriteRepository;
 import com.example.txprocessor.infrastructure.adapter.out.persistence.repository.TransactionReader;
 import com.example.txprocessor.infrastructure.adapter.out.persistence.cqrs.TransactionCommand;
 import com.example.txprocessor.infrastructure.adapter.out.persistence.cqrs.TransactionCqrsAdapter;
@@ -33,6 +35,11 @@ public class TxProcessorAppConfig {
     @Bean
     public TransactionQuery transactionQuery(TransactionReader transactionRepository) {
         return new TransactionQuery(transactionRepository);
+    }
+
+    @Bean
+    public TransactionWriter r2dbcTransactionWriteAdapter(TransactionWriteRepository repository) {
+        return new R2dbcTransactionWriteAdapter(repository);
     }
 
     @Bean
