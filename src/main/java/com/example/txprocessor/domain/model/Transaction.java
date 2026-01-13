@@ -32,4 +32,8 @@ public record Transaction(Long id, BigDecimal amount, TransactionType type, Tran
             current = current.parent();
         }
     }
+
+    public boolean hasParent() {
+        return parent != null;
+    }
 }
