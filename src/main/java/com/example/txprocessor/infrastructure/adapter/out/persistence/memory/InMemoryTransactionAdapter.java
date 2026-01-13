@@ -16,7 +16,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 @Repository
-@ConditionalOnProperty(name = "transaction.storage.type", havingValue = "in-memory", matchIfMissing = true)
+@ConditionalOnProperty(name = "transaction.storage.type", havingValue = "in-memory")
 @Slf4j
 public class InMemoryTransactionAdapter implements TransactionReader, TransactionWriter, Closeable {
     private final Map<Long, Transaction> byTxId = new ConcurrentHashMap<>();

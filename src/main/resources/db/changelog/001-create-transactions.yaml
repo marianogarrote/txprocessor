@@ -1,0 +1,22 @@
+databaseChangeLog:
+  - changeSet:
+      id: 001
+      author: mariano
+      changes:
+        - createTable:
+            tableName: transactions
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: amount
+                  type: NUMERIC(19,2)
+              - column:
+                  name: type
+                  type: VARCHAR(50)
+              - column:
+                  name: parent_id
+                  type: BIGINT

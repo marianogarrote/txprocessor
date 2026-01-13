@@ -1,0 +1,11 @@
+databaseChangeLog:
+  - changeSet:
+      id: 002
+      author: mariano
+      changes:
+        - createView:
+            viewName: transaction_read_view
+            replaceIfExists: true
+            selectQuery: |
+              SELECT id, amount, type, parent_id 
+              FROM transactions

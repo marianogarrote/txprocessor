@@ -3,11 +3,11 @@ package com.example.txprocessor.infrastructure.adapter.out.persistence.cqrs;
 import com.example.txprocessor.domain.model.Transaction;
 import com.example.txprocessor.domain.model.TransactionType;
 import com.example.txprocessor.infrastructure.adapter.out.persistence.repository.TransactionReader;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -23,12 +23,8 @@ class TransactionQueryTest {
     @Mock
     private TransactionReader repository;
 
+    @InjectMocks
     private TransactionQuery query;
-
-    @BeforeEach
-    void setup() {
-        query = new TransactionQuery(repository);
-    }
 
     @Test
     void findById_delegates_to_repository() {
